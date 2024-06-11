@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>틱택토</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 1px solid black;
+            width: 40px;
+            height: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        const { body } = document;
+        const $table = document.createElement('table');
+        const $result = document.createElement('div'); // 결과창
+        let resetBtn = document.createElement("button");
+        resetBtn.textContent = '게임 다시하기';
+        const rows = [];
+        let turn = 'O';
+
+        const init = () => {
+            // 셀 초기화
+            document.querySelectorAll('td').forEach(cell => {
+                cell.textContent = '';
+            });
+            $result.textContent = ''; // 결과창 초기화
+            turn = 'O'; // 턴 초기화
+            resetBtn.style.display = 'none'; // 버튼 초기화 
+        };
+
+        const resetGame = () => {
+            resetBtn.style.display = 'block';
+            resetBtn.addEventListener('click', init);
+            $result.parentNode.appendChild(resetBtn);
+        };
+
+        const callback = (event) => {
+            if (event.target.textContent !== '') {
+                console.log("빈칸이 아닙니다.");
+                return;
+            } else {
+                console.log("빈칸입니다.");
+                event.target.textContent = turn;
+                if (checkWinner(event.target)) {
+                    $result.textContent = `${turn} 님이 승리하셨습니다!`;
+                    $table.removeEventListener('click', callback);
+                    resetGame();
+                    return;
+                }
+            }
+            // 무승부 검사
+            const draw = rows.flat().every(cell => cell.textContent);
+            if (draw) {
+                $result.textContent = `무승부`;
+                resetGame();
+                return;
+            }
+            turn = turn === 'X' ? 'O' : 'X';
+        };
+
+        for (let i = 0; i < 3; i += 1) {
+            const $tr = document.createElement('tr');
+            const cells = [];
+            for (let j = 0; j < 3; j += 1) {
+                const $td = document.createElement('td');
+                $td.addEventListener('click', callback);
+                cells.push($td);
+                $tr.appendChild($td);
+            }
+            rows.push(cells);
+            $table.appendChild($tr);
+        }
+        body.appendChild($table);
+        body.appendChild($result);
+
+        const checkWinner = (target) => {
+            let rowIndex;
+            let cellIndex;
+            rows.forEach((row, ri) => {
+                row.forEach((cell, ci) => {
+                    if (cell === target) {
+                        rowIndex = ri;
+                        cellIndex = ci;
+                    }
+                });
+            });
+
+            // 세 칸 다 채워졌는지 검사
+            let hasWinner = false;
+
+            // 가로줄 검사
+            if (
+                rows[rowIndex][0].textContent === turn &&
+                rows[rowIndex][1].textContent === turn &&
+                rows[rowIndex][2].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+
+            // 세로줄 검사
+            if (
+                rows[0][cellIndex].textContent === turn &&
+                rows[1][cellIndex].textContent === turn &&
+                rows[2][cellIndex].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+
+            // 대각선 검사
+            if (
+                rows[0][0].textContent === turn &&
+                rows[1][1].textContent === turn &&
+                rows[2][2].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+
+            // 반대 대각선 검사
+            if (
+                rows[0][2].textContent === turn &&
+                rows[1][1].textContent === turn &&
+                rows[2][0].textContent === turn
+            ) {
+                hasWinner = true;
+            }
+            return hasWinner;
+        };
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    #result {
+      width: 180px;
+      height: 50px;
+      margin: 5px;
+      text-align: right;
+    }
+
+    #operator {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+      text-align: center;
+    }
+
+    button {
+      width: 50px;
+      height: 50px;
+      margin: 5px;
+    }
+  </style>
+
+  <input readonly id="operator" />
+  <input readonly type="number" id="result" />
+  <div class="row">
+    <button id="number-7">7</button>
+    <button id="number-8">8</button>
+    <button id="number-9">9</button>
+    <button id="plus">+</button>
+  </div>
+  <div class="row">
+    <button id="number-4">4</button>
+    <button id="number-5">5</button>
+    <button id="number-6">6</button>
+    <button id="minus">-</button>
+  </div>
+  <div class="row">
+    <button id="number-1">1</button>
+    <button id="number-2">2</button>
+    <button id="number-3">3</button>
+    <button id="div">/</button>
+  </div>
+  <div class="row">
+    <button id="clear">c</button>
+    <button id="number-0">0</button>
+    <button id="calc">=</button>
+    <button id="mul">*</button>
+  </div>
+
+  <script>
+    let num1 = "";
+    let num2 = "";
+    let operator = "";
+
+    const $result = document.querySelector("#result");
+    const $operator = document.querySelector("#operator");
+
+    const clickBtn = (event) => {
+      if (operator) {
+        if (!num2) {
+          $result.value = "";
+        }
+        num2 += event.target.textContent;
+        $result.value = num2;
+      } else {
+        num1 += event.target.textContent;
+        $result.value = num1;
+        return;
+      }
+    };
+
+    const clickOp = (op) => () => {
+      if (num1 !== "") {
+        if (operator === "") {
+          operator = op;
+          $operator.value = operator;
+        } else {
+          calculate();
+          operator = op;
+          $operator.value = operator;
+        }
+      } else {
+        alert("숫자를 입력하세요");
+      }
+    };
+
+    const calculate = () => {
+      if (num2) {
+        switch (operator) {
+          case '+':
+            $result.value = parseInt(num1) + parseInt(num2);
+            break;
+          case '-':
+            $result.value = num1 - num2;
+            break;
+          case '*':
+            $result.value = num1 * num2;
+            break;
+          case '/':
+            $result.value = num1 / num2;
+            break;
+        }
+      } else {
+        alert("숫자를 먼저 입력하세요.");
+      }
+    };
+
+    document.querySelector("#calc").addEventListener("click", calculate);
+
+    document.querySelector("#clear").addEventListener("click", () => {
+      $result.value = '';
+      $operator.value = '';
+      num1 = '';
+      num2 = '';
+    });
+
+    document.querySelector("#number-0").addEventListener("click", clickBtn);
+    document.querySelector("#number-1").addEventListener("click", clickBtn);
+    document.querySelector("#number-2").addEventListener("click", clickBtn);
+    document.querySelector("#number-3").addEventListener("click", clickBtn);
+    document.querySelector("#number-4").addEventListener("click", clickBtn);
+    document.querySelector("#number-5").addEventListener("click", clickBtn);
+    document.querySelector("#number-6").addEventListener("click", clickBtn);
+    document.querySelector("#number-7").addEventListener("click", clickBtn);
+    document.querySelector("#number-8").addEventListener("click", clickBtn);
+    document.querySelector("#number-9").addEventListener("click", clickBtn);
+
+    document.querySelector("#plus").addEventListener("click", clickOp("+"));
+    document.querySelector("#minus").addEventListener("click", clickOp("-"));
+    document.querySelector("#div").addEventListener("click", clickOp("/"));
+    document.querySelector("#mul").addEventListener("click", clickOp("*"));
+  </script>
+</body>
+
+</html>
