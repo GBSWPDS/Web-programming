@@ -1,13 +1,9 @@
-const SayColor = ({ setColor }) => {
-  const changeColor = (color) => {
-    setColor(color);
-  };
-
+const SayColor = ({ colorHandler }) => {
   return (
     <div>
-      <button onClick={() => changeColor("red")}>빨간색</button>
-      <button onClick={() => changeColor("green")}>초록색</button>
-      <button onClick={() => changeColor("blue")}>파란색</button>
+      <button onClick={() => colorHandler("red")}>빨간색</button>
+      <button onClick={() => colorHandler("green")}>초록색</button>
+      <button onClick={() => colorHandler("blue")}>파란색</button>
     </div>
   );
 };

@@ -19,6 +19,14 @@ function App() {
   //   setMessage("안녕히가세요");
   // };
 
+  const sayHandler = (msg) => {
+    setMessage(msg);
+  };
+
+  const colorHandler = (clr) => {
+    setColor(clr);
+  };
+
   return (
     <div>
       {/* <Say setMessage={setMessage} />
@@ -27,9 +35,9 @@ function App() {
       {/* <button onClick={sayHi}>입장</button>
       <button onClick={sayBi}>퇴장</button>
       <Say message={message} /> */}
-      <Controller setMessage={setMessage} />
+      <Controller sayHandler={sayHandler} />
       <Viewer message={message} color={color} />
-      <SayColor setColor={setColor} />
+      <SayColor colorHandler={colorHandler} />
     </div>
   );
 }

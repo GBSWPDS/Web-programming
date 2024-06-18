@@ -1,18 +1,10 @@
 import React from "react";
 
-const Controller = ({ setMessage }) => {
-  const sayHi = () => {
-    setMessage("안녕하세요!");
-  };
-
-  const sayBi = () => {
-    setMessage("안녕히가세요!");
-  };
-
+const Controller = ({ sayHandler }) => {
   return (
     <div>
-      <button onClick={sayHi}>입장</button>
-      <button onClick={sayBi}>퇴장</button>
+      <button onClick={() => sayHandler("안녕하세요.")}>입장</button>
+      <button onClick={() => sayHandler("안녕히 가세요.")}>퇴장</button>
     </div>
   );
 };
