@@ -2,11 +2,11 @@ import React from "react";
 
 const Controller = ({ setMessage }) => {
   const sayHi = () => {
-    setMessage("안녕하세요");
+    setMessage("안녕하세요!");
   };
 
   const sayBi = () => {
-    setMessage("안녕히가세요");
+    setMessage("안녕히가세요!");
   };
 
   return (
