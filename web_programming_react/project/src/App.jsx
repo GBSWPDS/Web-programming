@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Viewer from "./Viewer";
-import Controller from "./Controller";
+import Viewer from "./components/Viewer";
+import Controller from "./components/Controller";
 import "./App.css";
 
 function App() {
